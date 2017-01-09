@@ -1,0 +1,52 @@
+<div class="container-fluid custom-modal-container">
+    <div class="row custom-modal-header">
+        <div class="col-sm-12">
+            <h1 *ngIf="task">Edit task</h1>
+            <h1 *ngIf="!task">Create task</h1>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-6">
+            <div class="form-group">
+                <label>Task name</label>
+                <input type="text" class="form-control" [(ngModel)]="task.name" placeholder="Enter task name" required />
+            </div>
+        </div>
+        <div class="col-md-6">
+            <div class="form-group">
+                <label>Deadline</label>
+                <input class="form-control" [(ngModel)]="task.dueDate" year="2016" month="12" close-on-select="false" ng2-datetime-picker required />
+            </div>
+        </div>
+        <div class="col-md-12">
+            <div class="form-group">
+                <label>Description</label>
+                <textarea class="form-control" [(ngModel)]="task.description" placeholder="Enter description" style="resize: vertical;"></textarea>
+            </div>
+        </div>
+        <div class="col-md-6" *ngIf="categories">
+            <div class="form-group">
+                <label>Category</label>
+                <ng-select [allowClear]="true" [items]="categories" [disabled]="disabled" (selected)="selected($event)" (removed)="removed($event)"
+                    placeholder="No category selected">
+                </ng-select>
+                <p></p>
+            </div>
+        </div>
+        <div class="col-md-6">
+            <div class="form-group" *ngIf="!selectedCategory">
+                <label>New Category</label>
+                <input type="text" class="form-control" [(ngModel)]="task.category.name" placeholder="Enter a new category">
+            </div>
+        </div>
+    </div>
+</div>
+<div class="modal-footer">
+    <div class="btn-group">
+        <button type="button" class="btn btn-default" (click)="closeModal()">Close</button>
+        <button type="button" class="btn btn-primary" (click)="save()">
+            <span *ngIf="task">Save</span>
+            <span *ngIf="!task">Add</span>
+        </button>
+    </div>
+</div>

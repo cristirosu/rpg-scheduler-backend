@@ -15,6 +15,7 @@ import java.util.List;
  * Created by User on 1/8/2017.
  */
 @RestController
+@RequestMapping("/api")
 public class FriendsController {
 
     @Autowired

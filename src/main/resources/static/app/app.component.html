@@ -1,0 +1,32 @@
+<!--Side Menu-->
+<!--<div></div>
+
+<div class="container" style="margin-top: 10px;">
+    <router-outlet></router-outlet>
+</div>-->
+
+<md-sidenav-layout fullscreen>
+
+    <!-- main app container -->
+    <div>
+        <!-- Content -->
+        <button md-button (click)="right.open()">
+            <fa [name]="'bars'" class="text-primary"></fa>
+        </button>
+        <div class="container">
+            <router-outlet></router-outlet>
+        </div>
+    </div>
+
+    <!-- Sidebar -->
+    <md-sidenav #right md-component-id="right" style="padding: 15px;" class="md-sidenav-right">
+        <button class="btn btn-default btn-block" [routerLink]="['/']">Home</button>
+        <button class="btn btn-default btn-block" [routerLink]="['/achievements']">Achievements</button>
+        <button class="btn btn-default btn-block" [routerLink]="['/friends']">Friends</button>
+        <br><br><br>
+        <button class="btn btn-default btn-block btn-danger" [routerLink]="['/login']">Log out</button>
+    </md-sidenav>
+
+
+
+</md-sidenav-layout>

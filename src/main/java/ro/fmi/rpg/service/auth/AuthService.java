@@ -61,6 +61,7 @@ public class AuthService {
 
         String jwt = signer.sign(claims);
         System.out.println("RETURNING JWT +++ " + jwt);
+        sessionService.setUser(user);
         return new LoginResponse(jwt);
     }
 

@@ -1,0 +1,46 @@
+{
+  "name": "rpg-scheduler",
+  "version": "1.0.0",
+  "description": "RPG SCHEDULER",
+  "scripts": {
+    "start": "tsc && concurrently \"tsc -w\" \"lite-server\" "
+  },
+  "keywords": [],
+  "author": "",
+  "license": "MIT",
+  "dependencies": {
+    "@angular/common": "latest",
+    "@angular/compiler": "latest",
+    "@angular/core": "latest",
+    "@angular/forms": "latest",
+    "@angular/http": "latest",
+    "@angular/platform-browser": "latest",
+    "@angular/platform-browser-dynamic": "latest",
+    "@angular/router": "latest",
+    "@angular2-material/button": "latest",
+    "@angular2-material/card": "latest",
+    "@angular2-material/core": "latest",
+    "@angular2-material/icon": "latest",
+    "@angular2-material/input": "latest",
+    "@angular2-material/sidenav": "latest",
+    "angular2-fontawesome": "latest",
+    "angular2-modal": "latest",
+    "core-js": "latest",
+    "font-awesome": "latest",
+    "ng2-bootstrap": "latest",
+    "ng2-datetime-picker": "latest",
+    "ng2-select": "latest",
+    "ng2-toastr": "^1.3.3",
+    "reflect-metadata": "latest",
+    "rxjs": "latest",
+    "systemjs": "latest",
+    "zone.js": "latest"
+  },
+  "devDependencies": {
+    "@types/hammerjs": "^2.0.33",
+    "concurrently": "latest",
+    "lite-server": "latest",
+    "tslint": "latest"
+  },
+  "repository": {}
+}

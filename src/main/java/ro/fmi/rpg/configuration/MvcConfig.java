@@ -24,11 +24,11 @@ public class MvcConfig extends WebMvcConfigurerAdapter {
     @Override
     public void addInterceptors(InterceptorRegistry registry) {
         registry.addInterceptor(loggerInterceptor).addPathPatterns("/**");
-        registry.addInterceptor(jwtInterceptor).addPathPatterns("/achievements");
-        registry.addInterceptor(jwtInterceptor).addPathPatterns("/categories");
-        registry.addInterceptor(jwtInterceptor).addPathPatterns("/tasks/**");
-        registry.addInterceptor(jwtInterceptor).addPathPatterns("/user");
-        registry.addInterceptor(jwtInterceptor).addPathPatterns("/friends/**");
+        registry.addInterceptor(jwtInterceptor).addPathPatterns("/api/achievements");
+        registry.addInterceptor(jwtInterceptor).addPathPatterns("/api/categories");
+        registry.addInterceptor(jwtInterceptor).addPathPatterns("/api/tasks/**");
+        registry.addInterceptor(jwtInterceptor).addPathPatterns("/api/user");
+        registry.addInterceptor(jwtInterceptor).addPathPatterns("/api/friends/**");
     }
 
     @Override

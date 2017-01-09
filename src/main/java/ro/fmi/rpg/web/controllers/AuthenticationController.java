@@ -18,6 +18,7 @@ import ro.fmi.rpg.service.auth.AuthService;
  */
 @CrossOrigin
 @RestController
+@RequestMapping("/api")
 public class AuthenticationController {
 
     private Logger LOG = LoggerFactory.getLogger(AuthenticationController.class);

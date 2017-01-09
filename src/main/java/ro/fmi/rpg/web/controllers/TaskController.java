@@ -18,6 +18,7 @@ import java.util.List;
  */
 @CrossOrigin
 @RestController
+@RequestMapping("/api")
 public class TaskController {
 
     private Logger LOG = LoggerFactory.getLogger(AuthenticationController.class);

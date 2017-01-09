@@ -1,0 +1,18 @@
+{
+    "data": {
+        "id": 1,
+        "first_name": "Peta",
+        "last_name": "Dragos",
+        "email": "petadragos@gmail.com",
+        "phone_number": "0755386041",
+        "birth_date": "07/03/1994",
+        "character": {
+            "id": 1,
+            "user_id": 1,
+            "health": 100,
+            "experience": 35,
+            "level": 0,
+            "picture": null
+        }
+    }
+}

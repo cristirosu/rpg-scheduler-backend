@@ -1,0 +1,28 @@
+<div class="container-fluid custom-modal-container">
+    <div class="row custom-modal-header">
+        <div class="col-sm-12">
+        <h3><b>{{friend.firstName}} {{friend.lastName}}</b></h3>
+        <div class="row" style="text-align:center">
+            <img style="width:10%; height:10%;display:inline" [src]="friend.picture"/>
+        </div>
+    </div>
+</div>
+
+<div class="row" style="text-align:center;margin-top:5px;">
+    <b>Level: {{friend.level}}</b>
+</div>
+
+<div class="row" style="text-align:center;margin-top:5px;">
+     <b>Experience: {{friend.experience}}%</b>
+</div>
+
+<div class="row" style="text-align:center;margin-top:5px;">
+    <img style="width:3%; height:2%;display:inline" src="https://rpgmaker.net/media/content/games/4468/screenshots/hp_potion.png"/>
+    <b>{{friend.health}}%</b>
+</div>
+    
+<div class="modal-footer">
+    <div class="btn-group">
+        <button type="button" class="btn btn-default" (click)="closeModal()">Close</button>
+    </div>
+</div>

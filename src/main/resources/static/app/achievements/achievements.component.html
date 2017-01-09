@@ -1,0 +1,35 @@
+<div class="row">
+    <div class="col-md-12">
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                <h3 style="margin-top: 0;">Achievements</h3>
+                <small>Here you can see your achievements.</small>
+            </div>
+            <div class="panel-body">
+                <div class="row">
+                    <div class="col-md-3" *ngFor="let achievement of achievements">
+                        <div class="panel panel-default">
+                            <div class="panel-heading">
+                                <img [id]="'image'" [name]="'image'" [src]="achievement.picture" class="img-responsive">
+                            </div>
+                            <div class="panel-body">
+                                <b style="margin-top: 0;">{{achievement.name}}</b>
+                                <div><small>{{achievement.description}}</small></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<style>
+#image{
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+    width: 250px;
+    height: 180px;
+}
+</style>

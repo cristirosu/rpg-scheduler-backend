@@ -1,0 +1,30 @@
+{
+    "data": [
+        {
+            "id": 1,
+            "category_id": 1,
+            "name": "Angular 2",
+            "description": "De invatat Angular 2",
+            "date": "01/01/2017",
+            "is_finished": false,
+            "category": {
+                "id": 1,
+                "name": "Invatat",
+                "description": "Categorie pentru ore de invatat"
+            }
+        },
+        {
+            "id": 2,
+            "category_id": 1,
+            "name": "Java",
+            "description": "De invatat Java",
+            "date": "01/01/2017",
+            "is_finished": true,
+            "category": {
+                "id": 1,
+                "name": "Invatat",
+                "description": "Categorie pentru ore de invatat"
+            }
+        }
+    ]
+}

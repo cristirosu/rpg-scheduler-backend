@@ -14,6 +14,7 @@ import ro.fmi.rpg.dao.repository.UserRepository;
 import ro.fmi.rpg.service.auth.SessionService;
 
 import javax.servlet.ServletContext;
+import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
@@ -45,6 +46,8 @@ public class JWTInterceptor extends HandlerInterceptorAdapter {
         if(request.getMethod().equals("OPTIONS")){
             return true;
         }
+
+
         // JWT VALID ?
         // SESIUNE NOUA ?
         // IAU ID
@@ -52,7 +55,6 @@ public class JWTInterceptor extends HandlerInterceptorAdapter {
         // TREC PE SESIUNE USER-UL
 
         String jwt = request.getHeader("Authorization");
-
         if (request.getSession().isNew()) {
             if (sessionService.getUser() != null)
                 System.out.println("Session user ; " + sessionService.getUser().getEmail());
@@ -64,13 +66,14 @@ public class JWTInterceptor extends HandlerInterceptorAdapter {
             final JWTVerifier verifier = new JWTVerifier(secret);
             final Map<String, Object> claims = verifier.verify(jwt);
 
-            if (request.getSession().isNew()) {
-                System.out.println("NEW SESSION SETTING USER");
-                int userId = (int) claims.get("userId");
-                User sessionUser = userRepository.findOne(userId);
-                System.out.println("SET USER ID == " + userId);
-                sessionService.setUser(sessionUser);
-            }
+                if(request.getSession().isNew()){
+                    System.out.println("NEW SESSION SETTING USER");
+                    int userId = (int) claims.get("userId");
+                    User sessionUser = userRepository.findOne(userId);
+                    System.out.println("SET USER ID == " + userId);
+                    sessionService.setUser(sessionUser);
+                }
+
 
         } catch (JWTVerifyException e) {
             // Invalid Token

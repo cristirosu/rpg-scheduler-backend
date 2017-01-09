@@ -11,6 +11,7 @@ import ro.fmi.rpg.to.user.UserModel;
  */
 @CrossOrigin
 @RestController
+@RequestMapping("/api")
 public class UserController {
 
     @Autowired

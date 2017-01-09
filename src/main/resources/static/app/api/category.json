@@ -1,0 +1,27 @@
+{
+    "data": [
+        {
+            "id": 1,
+            "name": "Invatat",
+            "description": "Categorie pentru ore de invatat",
+            "tasks": [
+                {
+                    "id": 1,
+                    "category_id": 1,
+                    "name": "Angular 2",
+                    "description": "De invatat Angular 2",
+                    "date": null,
+                    "is_finished": false
+                },
+                {
+                    "id": 2,
+                    "category_id": 1,
+                    "name": "Java",
+                    "description": "De invatat Java",
+                    "date": null,
+                    "is_finished": false
+                }
+            ]
+        }
+    ]
+}
