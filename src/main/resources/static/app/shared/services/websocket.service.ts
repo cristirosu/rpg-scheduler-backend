@@ -23,4 +23,10 @@ export class WebSocketService {
         this.stompClient.send("/app/hello/" + topic, {}, JSON.stringify({'name': 'MyUsername'}));
     }
 
+    disconnect(){
+        if(this.stompClient !== undefined){
+            this.stompClient.disconnect();
+        }
+    }
+
 }

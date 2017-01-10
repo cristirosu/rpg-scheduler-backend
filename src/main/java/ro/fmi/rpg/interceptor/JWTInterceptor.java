@@ -12,6 +12,7 @@ import org.springframework.web.servlet.handler.HandlerInterceptorAdapter;
 import ro.fmi.rpg.dao.entity.User;
 import ro.fmi.rpg.dao.repository.UserRepository;
 import ro.fmi.rpg.service.auth.SessionService;
+import ro.fmi.rpg.service.notifications.NotificationService;
 
 import javax.servlet.ServletContext;
 import javax.servlet.http.Cookie;
@@ -41,12 +42,14 @@ public class JWTInterceptor extends HandlerInterceptorAdapter {
     @Autowired
     private UserRepository userRepository;
 
+    @Autowired
+    private NotificationService notificationService;
+
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception {
 
-        if(request.getMethod().equals("OPTIONS")){
+        if (request.getMethod().equals("OPTIONS")) {
             return true;
         }
-
 
         // JWT VALID ?
         // SESIUNE NOUA ?
@@ -55,6 +58,7 @@ public class JWTInterceptor extends HandlerInterceptorAdapter {
         // TREC PE SESIUNE USER-UL
 
         String jwt = request.getHeader("Authorization");
+
         if (request.getSession().isNew()) {
             if (sessionService.getUser() != null)
                 System.out.println("Session user ; " + sessionService.getUser().getEmail());
@@ -66,30 +70,31 @@ public class JWTInterceptor extends HandlerInterceptorAdapter {
             final JWTVerifier verifier = new JWTVerifier(secret);
             final Map<String, Object> claims = verifier.verify(jwt);
 
-                if(request.getSession().isNew()){
-                    System.out.println("NEW SESSION SETTING USER");
-                    int userId = (int) claims.get("userId");
-                    User sessionUser = userRepository.findOne(userId);
-                    System.out.println("SET USER ID == " + userId);
-                    sessionService.setUser(sessionUser);
+
+            //System.out.println("NEW SESSION SETTING USER");
+            int userId = (int) claims.get("userId");
+            User sessionUser = userRepository.findOne(userId);
+            System.out.println("SET USER ID == " + userId);
+
+            if (!sessionService.getSentLoginNotification()) {
+                sessionService.setSentLoginNotification(true);
+            }
+
+            if(request.getSession().isNew()){
+                System.out.println("NEW SESSION SETTINGS USER");
+                notificationService.notifyLogin(sessionUser);
+                sessionService.setUser(sessionUser);
+            } else {
+                System.out.println("NOT A NEW SESSION");
+                for(Cookie cookie : request.getCookies()){
+                    if (cookie.getName().equalsIgnoreCase("JSESSIONID")){
+                        System.out.println("SESSION ID <<<->>>" +  cookie.getValue());
+                    }
                 }
+            }
 
-
-        } catch (JWTVerifyException e) {
+        } catch (JWTVerifyException | NoSuchAlgorithmException | IOException | SignatureException | InvalidKeyException e) {
             // Invalid Token
-            e.printStackTrace();
-            return false;
-        } catch (NoSuchAlgorithmException e) {
-            e.printStackTrace();
-            return false;
-            //return new ServerResponse("Unauthorized", 401, new Headers<Object>());
-        } catch (IOException e) {
-            e.printStackTrace();
-            return false;
-        } catch (SignatureException e) {
-            e.printStackTrace();
-            return false;
-        } catch (InvalidKeyException e) {
             e.printStackTrace();
             return false;
         }

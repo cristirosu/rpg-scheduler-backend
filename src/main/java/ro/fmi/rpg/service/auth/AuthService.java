@@ -6,6 +6,7 @@ import org.springframework.stereotype.Service;
 import ro.fmi.rpg.dao.entity.Character;
 import ro.fmi.rpg.dao.repository.CharacterRepository;
 import ro.fmi.rpg.exception.RPGException;
+import ro.fmi.rpg.service.notifications.NotificationService;
 import ro.fmi.rpg.to.login.LoginRequest;
 import ro.fmi.rpg.to.login.LoginResponse;
 import ro.fmi.rpg.dao.entity.User;
@@ -32,6 +33,9 @@ public class AuthService {
 
     @Autowired
     private CharacterRepository characterRepository;
+
+    @Autowired
+    private NotificationService notificationService;
 
     public LoginResponse login(LoginRequest loginRequest) throws RPGException {
 
@@ -62,6 +66,7 @@ public class AuthService {
         String jwt = signer.sign(claims);
         System.out.println("RETURNING JWT +++ " + jwt);
         sessionService.setUser(user);
+        notificationService.notifyLogin(sessionService.getUser());
         return new LoginResponse(jwt);
     }
 

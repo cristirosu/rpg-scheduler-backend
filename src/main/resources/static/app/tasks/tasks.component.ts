@@ -25,7 +25,7 @@ export class TasksComponent implements OnInit {
   filters: Object = {};
   showFilters: boolean = false;
   errorMessage: string;
-  accountNotifications: boolean = false;
+  static accountNotifications: boolean = false;
 
   constructor(
     private _userService: UserService,
@@ -47,9 +47,9 @@ export class TasksComponent implements OnInit {
       .subscribe(
       user => {
         this.user = user;
-        if(!this.accountNotifications){
+        if(!TasksComponent.accountNotifications){
           this.subscribeForAccountNotifications();
-          this.accountNotifications = true;
+          TasksComponent.accountNotifications = true;
         }
       },
       error => this.errorMessage = <any>error

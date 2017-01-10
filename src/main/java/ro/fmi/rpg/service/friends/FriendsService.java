@@ -1,6 +1,5 @@
 package ro.fmi.rpg.service.friends;
 
-import org.postgresql.core.Notification;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import ro.fmi.rpg.dao.entity.User;
@@ -43,15 +42,19 @@ public class FriendsService {
     }
 
     public void deleteFriend(Integer friendId) {
-        UserFriend uf = friendsRepository.findByFriendId(userService.getLoggedInUser().getId(), friendId);
-        if(uf != null){
+        List<UserFriend> uf = friendsRepository.findByFriendId(userService.getLoggedInUser().getId(), friendId);
+        if(uf != null && !uf.isEmpty()){
             friendsRepository.delete(uf);
         }
+        notificationService.sendNotification(friendId, sessionService.getLoggedUserName() + " removed you from friends");
     }
 
     public void addFriend(String emailAddress) throws RPGException {
-        List<FriendModel> friendShip = friendsRepository.getFriendsByUser(sessionService.getUserId());
-        if(!friendShip.isEmpty()){
+        if(emailAddress.equals(sessionService.getUser().getEmail())){
+            throw new RPGException("You cannot add yourself as a friend");
+        }
+        UserFriend friendShip = friendsRepository.findFriendByEmail(sessionService.getUserId(), emailAddress);
+        if(friendShip != null){
             throw new RPGException("You are already friends with this person");
         }
         User friend = userRepository.findUserByEmail(emailAddress);
@@ -59,12 +62,19 @@ public class FriendsService {
             throw new RPGException("No users registered with provided address");
         }
         UserFriend uf = new UserFriend();
-        User u = userRepository.findOne(userService.getLoggedInUser().getId());
+        User u1 = userRepository.findOne(userService.getLoggedInUser().getId());
         uf.setFriend(friend);
-        uf.setUser(u);
+        uf.setUser(u1);
+
+        UserFriend uf2 = new UserFriend();
+        User u2 = userRepository.findOne(userService.getLoggedInUser().getId());
+        uf2.setFriend(u2);
+        uf2.setUser(friend);
 
         friendsRepository.save(uf);
+        friendsRepository.save(uf2);
 
-        notificationService.sendNotification(friend.getId(), NotificationType.FRIEND_REQUEST.getMessage() + "from " + u.getFirstName() + " " + u.getLastName());
+        notificationService.sendNotification(friend.getId(), NotificationType.FRIEND_REQUEST.getMessage() +
+                "from " + u1.getFirstName() + " " + u1.getLastName());
     }
 }

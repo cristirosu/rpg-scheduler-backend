@@ -13,6 +13,7 @@ import org.springframework.jms.core.JmsTemplate;
 import org.springframework.jms.support.converter.MappingJackson2MessageConverter;
 import org.springframework.jms.support.converter.MessageConverter;
 import org.springframework.jms.support.converter.MessageType;
+import org.springframework.scheduling.annotation.EnableScheduling;
 
 import javax.jms.ConnectionFactory;
 
@@ -22,6 +23,7 @@ import javax.jms.ConnectionFactory;
 
 @SpringBootApplication
 @EnableJms
+@EnableScheduling
 public class SpringBootWebApplication {
 
     public static void main(String[] args) {

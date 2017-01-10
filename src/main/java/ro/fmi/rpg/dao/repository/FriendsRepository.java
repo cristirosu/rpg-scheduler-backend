@@ -14,13 +14,22 @@ import java.util.List;
 public interface FriendsRepository extends JpaRepository<UserFriend, Integer>{
 
     @Query(" SELECT new ro.fmi.rpg.to.FriendModel(f.id, f.firstName, f.lastName, c.level, c.experience, c.health, false, c.picture) " +
-           " FROM UserFriend uf " +
-           " INNER JOIN uf.friend f " +
-           " INNER JOIN f.character c " +
-           " WHERE uf.user.id = :userId OR uf.friend.id = :userId")
-    public List<FriendModel> getFriendsByUser(@Param("userId") Integer userId);
+            " FROM UserFriend uf " +
+            " INNER JOIN uf.friend f " +
+            " INNER JOIN f.character c " +
+            " WHERE uf.user.id = :userId")
+    List<FriendModel> getFriendsByUser(@Param("userId") Integer userId);
 
     @Query(" SELECT uf FROM UserFriend uf " +
-           " WHERE uf.friend.id = :friendId AND uf.user.id = :userId")
-    public UserFriend findByFriendId(@Param("userId")Integer userId, @Param("friendId") Integer friendId);
+            " WHERE (uf.friend.id = :friendId AND uf.user.id = :userId) OR (uf.friend.id = :userId AND uf.user.id = :friendId)")
+    List<UserFriend> findByFriendId(@Param("userId")Integer userId, @Param("friendId") Integer friendId);
+
+    @Query(" SELECT uf FROM UserFriend uf " +
+            " WHERE uf.friend.email = :email AND uf.user.id = :userId")
+    UserFriend findFriendByEmail(@Param("userId") Integer userId, @Param("email") String email);
+
+    @Query( " SELECT f.id FROM UserFriend uf " +
+            " INNER JOIN uf.friend f " +
+            " WHERE uf.user.id = :userId")
+    List<Integer> getFriendIdsByUser(@Param("userId") Integer id);
 }

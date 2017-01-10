@@ -4,6 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Scope;
 import org.springframework.context.annotation.ScopedProxyMode;
+import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
 import org.springframework.web.context.WebApplicationContext;
 import ro.fmi.rpg.dao.entity.Character;
@@ -31,6 +32,8 @@ public class SessionService {
 
     @Value("${dev}")
     private String dev;
+
+    private Boolean sentLoginNotification = false;
 
     public SessionService() {
 
@@ -83,6 +86,18 @@ public class SessionService {
     public void setUser(User user) {
         System.out.println("Setting session user ===> " + user.getId() + "  :  " + user.getEmail());
         this.user = user;
+    }
+
+    public Boolean getSentLoginNotification() {
+        return sentLoginNotification;
+    }
+
+    public void setSentLoginNotification(Boolean sentLoginNotification) {
+        this.sentLoginNotification = sentLoginNotification;
+    }
+
+    public String getLoggedUserName(){
+        return user.getFirstName() + " " + user.getLastName();
     }
 
     @Override
