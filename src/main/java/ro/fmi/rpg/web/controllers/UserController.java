@@ -23,4 +23,9 @@ public class UserController {
         return userService.getLoggedInUser();
     }
 
+    @RequestMapping(path = "/users/{userId}", method = RequestMethod.GET)
+    public UserModel getUserDetails(@PathVariable("userId") Integer userId) throws RPGException {
+        return userService.getUserDetails(userId);
+    }
+
 }

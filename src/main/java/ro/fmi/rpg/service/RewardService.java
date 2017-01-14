@@ -112,4 +112,9 @@ public class RewardService {
         return achievements;
     }
 
+    public List<AchievementModel> getAchievementsByUserId(Integer userId){
+        List<AchievementModel> achievements = acvhievementRepository.getAchievementsForUser(userId);
+        return achievements;
+    }
+
 }

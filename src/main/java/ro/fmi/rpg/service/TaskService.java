@@ -5,8 +5,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import ro.fmi.rpg.dao.entity.Category;
 import ro.fmi.rpg.dao.entity.Task;
+import ro.fmi.rpg.dao.entity.User;
 import ro.fmi.rpg.dao.repository.CategoryRepository;
 import ro.fmi.rpg.dao.repository.TaskRepository;
+import ro.fmi.rpg.dao.repository.UserRepository;
+import ro.fmi.rpg.exception.RPGException;
 import ro.fmi.rpg.service.auth.SessionService;
 import ro.fmi.rpg.service.helper.ConverterHelper;
 import ro.fmi.rpg.to.task.CategoryModel;
@@ -36,6 +39,9 @@ public class TaskService {
 
     @Autowired
     private RewardService rewardService;
+
+    @Autowired
+    private UserRepository userRepository;
 
     public List<TaskModel> updateTask(TaskModel taskModel) throws ParseException {
 
@@ -127,4 +133,14 @@ public class TaskService {
 
         return getTasks();
     }
+
+    public List<TaskModel> getTasksForSync(String email, String password) throws RPGException {
+        User user = userRepository.findUserByEmailAndPassword(email, password);
+        if(user == null){
+            throw new RPGException("UNAUTHORIZED TO SYNC");
+        }
+        List<Task> syncTasks = taskRepository.findUserTasks(user.getId());
+        return getTaskModel(syncTasks);
+    }
+
 }

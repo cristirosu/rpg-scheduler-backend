@@ -26,6 +26,16 @@ export class UserService {
             .catch(this.handleError); 
     }
 
+    getUserById(id: number) {
+        let headers = new Headers({ 'Content-Type': 'application/json', 'Authorization': this.authService.token });
+        let options = new RequestOptions({ headers: headers });
+
+        return <Observable<User>>this._http
+            .get(AppSettings.API_URL + '/users/' + id, options)
+            .map((response: Response) => <User>response.json())
+            .catch(this.handleError);
+    }
+
     private handleError(error: Response) {
         let msg = `Status code ${error.status} on url ${error.url}`;
         console.log(msg);

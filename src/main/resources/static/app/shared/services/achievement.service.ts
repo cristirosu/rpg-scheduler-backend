@@ -14,13 +14,22 @@ import { AppSettings } from '../services/app.settings';
 export class AchievementService {
     constructor(private _http: Http, private authService: AuthenticationService) { }
     
-    list() {
+    getAchievementsByUserId(id: number) {
+        let headers = new Headers( { 'Authorization': this.authService.token  });
+        let options = new RequestOptions({ headers: headers });
+
+        return this._http.get(AppSettings.API_URL + '/achievements/' + id, options)
+            .map((response: Response) => <Achievement[]>response.json())
+            .catch(this.handleError); 
+    }
+
+    getAchievements() {
         let headers = new Headers( { 'Authorization': this.authService.token  });
         let options = new RequestOptions({ headers: headers });
 
         return this._http.get(AppSettings.API_URL + '/achievements', options)
             .map((response: Response) => <Achievement[]>response.json())
-            .catch(this.handleError); 
+            .catch(this.handleError);
     }
 
     private handleError(error: Response) {

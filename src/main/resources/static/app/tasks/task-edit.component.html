@@ -14,6 +14,12 @@
         </div>
         <div class="col-md-6">
             <div class="form-group">
+                <label>Difficulty</label>
+                <input type="text" class="form-control" [(ngModel)]="task.difficulty" placeholder="Difficulty" required />
+            </div>
+        </div>
+        <div class="col-md-6">
+            <div class="form-group">
                 <label>Deadline</label>
                 <input class="form-control" [(ngModel)]="task.dueDate" year="2016" month="12" close-on-select="false" ng2-datetime-picker required />
             </div>

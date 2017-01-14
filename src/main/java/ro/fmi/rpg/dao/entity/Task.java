@@ -36,6 +36,9 @@ public class Task implements Serializable{
     @Column(name = "experience")
     private Integer experience;
 
+    @Column(name = "difficulty")
+    private String difficulty;
+
     public Task() {
     }
 
@@ -45,6 +48,14 @@ public class Task implements Serializable{
         this.dueDate = dueDate;
         this.isFinished = isFinished;
         this.category = category;
+    }
+
+    public String getDifficulty() {
+        return difficulty;
+    }
+
+    public void setDifficulty(String difficulty) {
+        this.difficulty = difficulty;
     }
 
     public Category getCategory() {

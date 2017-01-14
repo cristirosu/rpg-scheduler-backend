@@ -1,28 +1,40 @@
-<div class="container-fluid custom-modal-container">
-    <div class="row custom-modal-header">
-        <div class="col-sm-12">
-        <h3><b>{{friend.firstName}} {{friend.lastName}}</b></h3>
-        <div class="row" style="text-align:center">
-            <img style="width:10%; height:10%;display:inline" [src]="friend.picture"/>
+<div   class="row">
+    <div class="col-md-12">
+        <div>Ssss</div>
+        <div  class="panel panel-default">
+            <div  class="panel-heading">
+                <h3 style="margin-top: 0;">Details</h3>
+                <small>Here you can see achievements for <b>{{friend?.firstName}} {{friend?.lastName}}</b></small>
+                <img style="height: 10%; width: 10%;display:block; text-align:center; margin: 0 auto" class="img-circle" [src]="friend?.character?.picture" >
+            </div>
         </div>
     </div>
 </div>
 
-<div class="row" style="text-align:center;margin-top:5px;">
-    <b>Level: {{friend.level}}</b>
-</div>
 
-<div class="row" style="text-align:center;margin-top:5px;">
-     <b>Experience: {{friend.experience}}%</b>
-</div>
-
-<div class="row" style="text-align:center;margin-top:5px;">
-    <img style="width:3%; height:2%;display:inline" src="https://rpgmaker.net/media/content/games/4468/screenshots/hp_potion.png"/>
-    <b>{{friend.health}}%</b>
-</div>
-    
-<div class="modal-footer">
-    <div class="btn-group">
-        <button type="button" class="btn btn-default" (click)="closeModal()">Close</button>
+<div class="row">
+    <div class="col-md-12">
+        <div>Ssss</div>
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                <h3 style="margin-top: 0;">Achievements</h3>
+                <small>Here you can see achievements for <b>{{friend?.firstName}} {{friend?.lastName}}</b></small>
+            </div>
+            <div class="panel-body">
+                <div class="row">
+                    <div class="col-md-3" *ngFor="let achievement of achievements">
+                        <div class="panel panel-default">
+                            <div class="panel-heading">
+                                <img [id]="'image'" [name]="'image'" [src]="achievement.picture" class="img-responsive">
+                            </div>
+                            <div class="panel-body">
+                                <b style="margin-top: 0;">{{achievement.name}}</b>
+                                <div><small>{{achievement.description}}</small></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
 </div>

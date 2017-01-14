@@ -1,10 +1,7 @@
 package ro.fmi.rpg.web.controllers;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import ro.fmi.rpg.service.CategoryService;
 import ro.fmi.rpg.service.RewardService;
 import ro.fmi.rpg.to.task.AchievementModel;
@@ -30,6 +27,12 @@ public class AchievementController {
     @RequestMapping(path = "/achievements", method = RequestMethod.GET)
     public List<AchievementModel> getCategories(){
         return rewardService.getAchievements();
+    }
+
+    @CrossOrigin
+    @RequestMapping(path = "/achievements/{userId}", method = RequestMethod.GET)
+    public List<AchievementModel> getCategories(@PathVariable("userId") Integer userId){
+        return rewardService.getAchievementsByUserId(userId);
     }
 
 }

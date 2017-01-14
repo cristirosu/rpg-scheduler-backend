@@ -1,64 +1,56 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, OnInit, OnDestroy} from '@angular/core';
+import {ActivatedRoute, Router} from "@angular/router";
+import {Achievement} from "../models/achievement.model";
+import {AchievementService} from "../shared/services/achievement.service";
+import {UserService} from "../shared/services/user.service";
+import {User} from "../models/user.model";
 
-import { DialogRef, ModalComponent, CloseGuard } from 'angular2-modal';
-import { BSModalContext } from 'angular2-modal/plugins/bootstrap';
-
-import { CategoryService } from '../shared/services/category.service';
-
-
-import { Task } from '../models/task.model';
-import { Category } from '../models/category.model';
-import { Friend } from '../models/friend.model';
-import { FriendsService } from '../shared/services/friends.service';
-import { ToastService } from '../shared/services/toast.service';
-
-export class FriendsModalContext extends BSModalContext {
-    public friend: Friend;
-}
-
-/**
- * A Sample of how simple it is to create a new window, with its own injects.
- */
 @Component({
-    selector: 'modal-content',
-    templateUrl: 'app/friends/friend.details.component.html'
+    templateUrl: 'app/friends/friend.details.component.html',
 })
-export class FriendDetailsModal implements CloseGuard, ModalComponent<FriendsModalContext>, OnInit {
-    context: FriendsModalContext;
-    friend: Friend = new Friend();
+export class FriendDetailsComponennt implements OnInit,OnDestroy {
+    achievements:Achievement;
+    friend:User;
+    id:number;
+    private sub:any;
 
-    constructor(
-        public dialog: DialogRef<FriendsModalContext>,
-        public friendsService: FriendsService,
-        public toastService: ToastService
-    ) {
-        this.context = dialog.context;
-        if (dialog.context.friend) this.friend = dialog.context.friend;
-
-        dialog.setCloseGuard(this);
+    constructor(private route:ActivatedRoute,
+                private _achievementService:AchievementService,
+                private _userService:UserService) {
+        console.log("constrcutct");
     }
 
     ngOnInit() {
-        console.log("seeeeeeeeee");
+        this.sub = this.route.params.subscribe(params => {
+            this.id = +params['id']; // (+) converts string 'id' to a number
+            this.getAchievements(this.id);
+            this.getFriend(this.id);
+            // In a real app: dispatch action to load the details here.
+        });
     }
 
-    deleteFriend(friend: Friend){
-        if (confirm("Are you sure?")) {
-      this.friendsService.deleteFriend(friend)
-        .subscribe(
-        () => {
-            this.toastService.showSuccess("Succesfuly deleted friend");
-            this.closeModal();
-        },
-        error => {
-            this.toastService.showError("Error while deleting friend")
-            this.closeModal();            
-        }
-        );
-    }
+    ngOnDestroy() {
+        this.sub.unsubscribe();
     }
 
-    closeModal() {
-        this.dialog.close();
+    getAchievements(id:number) {
+        this._achievementService.getAchievementsByUserId(id)
+            .subscribe(
+                achievements => this.achievements = achievements,
+                //TODO: toast error
+                //error => this.errorMessage = <any>error
+            );
+    }
+
+    getFriend(id:number) {
+        this._userService.getUserById(id)
+            .subscribe(
+                friend => {
+                    this.friend = friend
+                    console.log(this.friend);
+                }
+                //TODO: toast error
+                //error => this.errorMessage = <any>error
+            );
     }
 }

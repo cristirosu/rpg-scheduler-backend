@@ -8,6 +8,7 @@ export class Task {
   dueDate: string;
   isFinished: boolean = false;
   category: Category = new Category(undefined,undefined);//Category;// = new Category();
+  difficulty: string;
 }
 
 

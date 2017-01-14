@@ -4,7 +4,7 @@ import { Friend } from '../models/friend.model';
 
 import { Modal, BSModalContext } from 'angular2-modal/plugins/bootstrap';
 import { Overlay, overlayConfigFactory } from 'angular2-modal';
-import { FriendDetailsModal } from './friend.details.component';
+import { FriendDetailsModal } from './friend.modal.component';
 import { FriendsService } from '../shared/services/friends.service'
 import { ToastService } from '../shared/services/toast.service'
 

@@ -2,13 +2,13 @@ import { Character } from './character.model';
 
 export class User {
   id: number;
-  first_name: string;
-  last_name: string;
+  firstName: string;
+  lastName: string;
   email: string;
-  phone_number: string;
-  birth_date: Date;
+  phoneNumber: string;
+  birthDate: Date;
   password: string;
-  created_at: Date;
-  last_login: Date;
+  createdAt: Date;
+  lastLogin: Date;
   character: Character;
 }

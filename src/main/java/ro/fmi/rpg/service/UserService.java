@@ -26,6 +26,11 @@ public class UserService {
         return getUserModelFromUser(user);
     }
 
+    public UserModel getUserDetails(Integer userId) {
+        User user = userRepository.findOne(userId);
+        return getUserModelFromUser(user);
+    }
+
     private UserModel getUserModelFromUser(User user){
         UserModel um = new UserModel();
         um.setEmail(user.getEmail());
@@ -48,4 +53,6 @@ public class UserService {
         um.setCharacter(cm);
         return um;
     }
+
+
 }

@@ -20,7 +20,7 @@ export class AchievementsComponent implements OnInit {
   }
 
   getAchievements() {
-    this._achievementService.list()
+    this._achievementService.getAchievements()
       .subscribe(
         achievements => this.achievements = achievements,
         error => this.errorMessage = <any>error
