@@ -6,7 +6,7 @@ import 'rxjs/add/operator/catch';
 import { Observable } from 'rxjs/Observable';
 import 'rxjs/add/observable/throw';
 
-import { Friend } from '../../models/friend.model';
+import { Friend } from '../../../../../../../../../Angular Projects/peta tempalte/ng2-admin/src/app/models/friend.model';
 import { AuthenticationService } from './authentication.service';
 import { AppSettings } from '../services/app.settings';
 

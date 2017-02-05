@@ -37,7 +37,11 @@ public class Task implements Serializable{
     private Integer experience;
 
     @Column(name = "difficulty")
-    private String difficulty;
+    private int difficulty;
+
+    @Temporal(TemporalType.TIMESTAMP)
+    @Column(name = "finished_date")
+    private Date finishedDate;
 
     public Task() {
     }
@@ -50,11 +54,11 @@ public class Task implements Serializable{
         this.category = category;
     }
 
-    public String getDifficulty() {
+    public int getDifficulty() {
         return difficulty;
     }
 
-    public void setDifficulty(String difficulty) {
+    public void setDifficulty(int difficulty) {
         this.difficulty = difficulty;
     }
 
@@ -113,5 +117,13 @@ public class Task implements Serializable{
 
     public void setExperience(Integer experience) {
         this.experience = experience;
+    }
+
+    public Date getFinishedDate() {
+        return finishedDate;
+    }
+
+    public void setFinishedDate(Date finishedDate) {
+        this.finishedDate = finishedDate;
     }
 }

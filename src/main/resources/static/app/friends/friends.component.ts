@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 
-import { Friend } from '../models/friend.model';
+import { Friend } from '../../../../../../../../Angular Projects/peta tempalte/ng2-admin/src/app/models/friend.model';
 
 import { Modal, BSModalContext } from 'angular2-modal/plugins/bootstrap';
 import { Overlay, overlayConfigFactory } from 'angular2-modal';

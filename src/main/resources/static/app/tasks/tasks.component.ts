@@ -4,15 +4,14 @@ import { UserService } from '../shared/services/user.service';
 import { TaskService } from '../shared/services/task.service';
 import { CategoryService } from '../shared/services/category.service';
 
-import { User } from '../models/user.model';
-import { Task } from '../models/task.model';
-import { Category } from '../models/category.model';
 
 import { Modal, BSModalContext } from 'angular2-modal/plugins/bootstrap';
 import { CustomModalContext, CustomModal } from './task-edit.component';
 import { Overlay, overlayConfigFactory } from 'angular2-modal';
 import {WebSocketService} from "../shared/services/websocket.service";
 import {ToastService} from "../shared/services/toast.service";
+import {User} from "../models/user.model";
+import {Task} from "../models/task.model";
 
 @Component({
   templateUrl: 'app/tasks/tasks.component.html',

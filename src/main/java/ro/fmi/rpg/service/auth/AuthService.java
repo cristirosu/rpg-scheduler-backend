@@ -13,6 +13,7 @@ import ro.fmi.rpg.dao.entity.User;
 import ro.fmi.rpg.dao.repository.UserRepository;
 import ro.fmi.rpg.service.email.EmailService;
 import ro.fmi.rpg.service.email.EmailType;
+import ro.fmi.rpg.to.user.UserModel;
 
 import java.util.HashMap;
 
@@ -70,23 +71,35 @@ public class AuthService {
         return new LoginResponse(jwt);
     }
 
-    public User register(User user) throws RPGException {
+    public User register(UserModel user) throws RPGException {
         if(userRepository.findUserByEmail(user.getEmail()) != null){
             throw new RPGException("Email already in use");
         }
 
-        userRepository.save(user);
+        User toBeSaved = new User();
+        toBeSaved.setConfirmed(false);
+        toBeSaved.setEmail(user.getEmail());
+        toBeSaved.setFirstName(user.getFirstName());
+        toBeSaved.setLastName(user.getLastName());
+        toBeSaved.setPassword(user.getPassword());
+        toBeSaved.setPhoneNumber("0767895301");
+        userRepository.save(toBeSaved);
 
         Character character = new Character();
         character.setExperience(0);
         character.setLevel(1);
-        character.setUser(user);
-        character.setPicture("");
+        character.setUser(toBeSaved);
+        if(user.getPicture() == null || user.getPicture().isEmpty()){
+            character.setPicture("http://vignette1.wikia.nocookie.net/wowwiki/images/2/2b/The_lich_king_Wotlk.png/revision/latest?cb=20150418151044");
+        } else {
+            character.setPicture(user.getPicture());
+        }
+
         character.setHealth(100);
 
         characterRepository.save(character);
-        emailService.send(EmailType.ACTIVATION_EMAIL, user);
-        return user;
+        emailService.send(EmailType.ACTIVATION_EMAIL, toBeSaved);
+        return toBeSaved;
     }
 
     public void activate(Integer id) throws RPGException {

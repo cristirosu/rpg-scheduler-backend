@@ -20,7 +20,7 @@ public class SyncController {
     private TaskService taskService;
 
     @CrossOrigin
-    @RequestMapping(path = "/sync", method = RequestMethod.GET)
+    @RequestMapping(path = "/sync", method = RequestMethod.POST)
     public List<TaskModel> getTasksForSync(@RequestBody LoginRequest loginRequest) throws RPGException {
         return taskService.getTasksForSync(loginRequest.getEmail(), loginRequest.getPassword());
     }

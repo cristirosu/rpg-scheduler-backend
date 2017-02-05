@@ -37,9 +37,8 @@ public class User implements Serializable{
     @NotNull
     private String email;
 
-    @NotNull
     @Size(min = 10, max = 10)
-    @Column(name = "phone_number")
+    @Column(name = "phone_number", nullable = false)
     private String phoneNumber;
 
     @Column(name = "birth_date")

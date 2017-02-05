@@ -18,7 +18,7 @@ export class ToastService {
     }
 
     showCustom(message: string){
-        this.toastr.custom('<span style="color: red">Message in red.</span>', null, {enableHTML: true});
+        this.toastr.custom('<span style="display:inline; height:500px; width:500px;color: red;z-index: 100000;background-color: red;">Message in red.</span>', null, {enableHTML: true});
     }
 
 }

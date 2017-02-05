@@ -13,4 +13,9 @@ export class AppSettings {
      return  (devMode) ? ( "http" +((apiSecured) ? "s" : "") + "://" + apiHost + ":" + apiPort ) : prodPath;
   }
 
+    public static get SOCKETG_URL(): string {
+        let devMode = true, prodPath = "http://cristi.red:8080/gs-guide-websocket", local = "http://localhost:8080/gs-guide-websocket";
+        return  (devMode) ? local : prodPath;
+    }
+
 }

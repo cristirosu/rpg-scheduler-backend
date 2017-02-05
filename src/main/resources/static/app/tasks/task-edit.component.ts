@@ -6,8 +6,8 @@ import { BSModalContext } from 'angular2-modal/plugins/bootstrap';
 import { CategoryService } from '../shared/services/category.service';
 import { TaskService } from '../shared/services/task.service';
 
-import { Task } from '../models/task.model';
-import { Category } from '../models/category.model';
+import { Task } from '../../../../../../../../Angular Projects/peta tempalte/ng2-admin/src/app/models/task.model';
+import { Category } from '../../../../../../../../Angular Projects/peta tempalte/ng2-admin/src/app/models/category.model';
 
 export class CustomModalContext extends BSModalContext {
     public task: Task;

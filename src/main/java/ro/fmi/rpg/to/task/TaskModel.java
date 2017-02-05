@@ -12,7 +12,7 @@ public class TaskModel {
     private String dueDate;
     private Boolean isFinished;
     private CategoryModel category;
-    private String difficulty;
+    private int difficulty;
 
     public String getName() {
         return name;
@@ -70,11 +70,11 @@ public class TaskModel {
         this.id = id;
     }
 
-    public String getDifficulty() {
+    public int getDifficulty() {
         return difficulty;
     }
 
-    public void setDifficulty(String difficulty) {
+    public void setDifficulty(int difficulty) {
         this.difficulty = difficulty;
     }
 

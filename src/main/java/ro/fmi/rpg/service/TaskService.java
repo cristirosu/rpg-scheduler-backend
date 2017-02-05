@@ -12,11 +12,14 @@ import ro.fmi.rpg.dao.repository.UserRepository;
 import ro.fmi.rpg.exception.RPGException;
 import ro.fmi.rpg.service.auth.SessionService;
 import ro.fmi.rpg.service.helper.ConverterHelper;
+import ro.fmi.rpg.to.charts.BarChartData;
+import ro.fmi.rpg.to.charts.LineChartData;
 import ro.fmi.rpg.to.task.CategoryModel;
 import ro.fmi.rpg.to.task.TaskModel;
 
 import java.text.ParseException;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -64,6 +67,7 @@ public class TaskService {
         task.setName(taskModel.getName());
         task.setCategory(category);
         task.setDescription(taskModel.getDescription());
+        task.setDifficulty(taskModel.getDifficulty());
         task.setFinished(taskModel.getIsFinished());
         task.setDueDate(converter.getDateFromString(taskModel.getDueDate()));
 
@@ -90,6 +94,7 @@ public class TaskService {
             tm.setIsFinished(task.isFinished());
             tm.setDueDate(task.getDueDate().toString());
             tm.setName(task.getName());
+            tm.setDifficulty(task.getDifficulty());
 
             Category category = task.getCategory();
             CategoryModel cm = new CategoryModel();
@@ -109,7 +114,7 @@ public class TaskService {
     public List<TaskModel> deleteTask(int taskId) throws NotFoundException {
         Task task = taskRepository.findOne(taskId);
 
-        if(task == null){
+        if (task == null) {
             throw new NotFoundException("No task with id " + taskId + " found in db");
         }
 
@@ -120,8 +125,14 @@ public class TaskService {
     public List<TaskModel> finishTask(int taskId) throws NotFoundException {
         Task task = taskRepository.findOne(taskId);
 
-        if(task == null){
+        if (task == null) {
             throw new NotFoundException("No task with id " + taskId + " found in db");
+        }
+
+        if(task.isFinished()){
+            task.setFinishedDate(null);
+        } else {
+            task.setFinishedDate(new Date());
         }
 
         task.setFinished(!task.isFinished());
@@ -136,11 +147,109 @@ public class TaskService {
 
     public List<TaskModel> getTasksForSync(String email, String password) throws RPGException {
         User user = userRepository.findUserByEmailAndPassword(email, password);
-        if(user == null){
+        if (user == null) {
             throw new RPGException("UNAUTHORIZED TO SYNC");
         }
         List<Task> syncTasks = taskRepository.findUserTasks(user.getId());
         return getTaskModel(syncTasks);
     }
 
+    public void updateTaskDeadline(TaskModel taskModel) throws ParseException {
+        System.out.println(taskModel.getId() + " : " + taskModel.getDueDate());
+        Task task = taskRepository.findOne(taskModel.getId());
+        task.setDueDate(converter.getDateFromString(taskModel.getDueDate()));
+
+        taskRepository.save(task);
+        taskRepository.flush();
+    }
+
+    public List<BarChartData> getBarChartData() {
+        List<BarChartData> data = new ArrayList<>();
+        List<Task> tasks = taskRepository.findUserTasks(sessionService.getUser().getId());
+
+        BarChartData b2 = new BarChartData("Finished late");
+        b2 = initializeBarChart(b2);
+        for (Task task : tasks) {
+            int month = task.getDueDate().getMonth();
+            if (task.getDueDate().before(new Date()))
+                b2.getData().set(month, b2.getData().get(month) + 1);
+        }
+        data.add(b2);
+
+        BarChartData b1 = new BarChartData("Finished on time");
+        b1 = initializeBarChart(b1);
+        for (Task task : tasks) {
+            int month = task.getDueDate().getMonth();
+            if (task.isFinished() && task.getDueDate().after(task.getFinishedDate()))
+                b1.getData().set(month, b1.getData().get(month) + 1);
+        }
+        data.add(b1);
+        return data;
+    }
+
+    private BarChartData initializeBarChart(BarChartData barChart) {
+        barChart.setData(new ArrayList<>());
+        for (int currentMonth = 0; currentMonth <= 11; currentMonth++) {
+            barChart.getData().add(currentMonth, 0);
+        }
+        return barChart;
+    }
+
+    public List<LineChartData> getLineChartData() {
+        List<LineChartData> data = new ArrayList<>();
+        List<Task> tasks = taskRepository.findUserTasks(sessionService.getUser().getId());
+
+        LineChartData l1 = new LineChartData();
+        LineChartData l2 = new LineChartData();
+        for (Task task : tasks) {
+            int month = task.getDueDate().getMonth();
+            if (task.getDueDate().getYear() == new Date().getYear()) {
+                l1.getValues().set(month, l1.getValues().get(month) + 1);
+            } else if (task.getDueDate().getYear() == new Date().getYear() - 1) {
+                l2.getValues().set(month, l2.getValues().get(month) + 1);
+            }
+        }
+        data.add(l1);
+        data.add(l2);
+        return data;
+    }
+
+    public LineChartData getPieChartData() {
+        List<Task> tasks = taskRepository.findUserTasks(sessionService.getUser().getId());
+
+        LineChartData l1 = new LineChartData();
+        for (Task task : tasks) {
+            if (!task.isFinished()) {
+                if (task.getDueDate().before(new Date())) {
+                    l1.getValues().set(1, l1.getValues().get(1) + 1);
+                } else {
+                    l1.getValues().set(0, l1.getValues().get(0) + 1);
+                }
+            }
+        }
+        return l1;
+    }
+
+    public LineChartData getDoughnotData() {
+        List<Task> tasks = taskRepository.findUserTasks(sessionService.getUser().getId());
+
+        LineChartData l1 = new LineChartData();
+        for (Task task : tasks) {
+            if (task.getDueDate().getMonth() == new Date().getMonth()) {
+                if (task.isFinished() && task.getDueDate().before(task.getFinishedDate())) {
+                    l1.getValues().set(0, l1.getValues().get(0) + 1);
+                }
+                if (!task.isFinished() && task.getDueDate().before(new Date())){
+                    l1.getValues().set(1, l1.getValues().get(1) + 1);
+                }
+                if(task.isFinished() && task.getDueDate().after(task.getFinishedDate())){
+                    l1.getValues().set(2, l1.getValues().get(2) + 1);
+                }
+                if(!task.isFinished() && task.getDueDate().after(new Date())){
+                    l1.getValues().set(3, l1.getValues().get(3) + 1);
+                }
+            }
+        }
+        return l1;
+    }
 }

@@ -16,7 +16,7 @@ public class ConverterHelper {
     private static SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm");
     //2016-12-21T21:07:00.000Z
     public Date getDateFromString(String stringDate) throws ParseException {
-        stringDate = stringDate.substring(0, stringDate.length() - 8);
+        //stringDate = stringDate.substring(0, stringDate.length() - 8);
         stringDate = stringDate.replace("T", " ");
         Date date = simpleDateFormat.parse(stringDate);
         System.out.println("date : " + simpleDateFormat.parse(stringDate));

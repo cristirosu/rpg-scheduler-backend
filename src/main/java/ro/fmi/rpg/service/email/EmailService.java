@@ -3,6 +3,7 @@ package ro.fmi.rpg.service.email;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.stereotype.Service;
@@ -21,6 +22,8 @@ public class EmailService {
 
     private Logger LOG = LoggerFactory.getLogger(EmailService.class);
 
+    @Value("${dev}")
+    private Boolean devMode;
 
     @Autowired
     private JavaMailSender javaMailSender;
@@ -45,7 +48,11 @@ public class EmailService {
     private String getEmailContent(EmailType emailType, User user){
         switch (emailType) {
             case ACTIVATION_EMAIL: {
-                return "http://localhost:3000/activation/" + user.getId();
+                if(devMode){
+                    return "http://localhost:3000/#/activation/" + user.getId();
+                } else {
+                    return "http://cristi.red:8080/#/activation/" + user.getId();
+                }
             }
             default: {
                 return "Empty email";

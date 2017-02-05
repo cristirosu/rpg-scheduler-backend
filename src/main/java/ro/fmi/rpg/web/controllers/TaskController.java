@@ -50,4 +50,9 @@ public class TaskController {
         return taskService.deleteTask(taskId);
     }
 
+    @PutMapping(path = "/tasks/{taskId:.+}/deadline")
+    public void updateTaskDeadline(@RequestBody TaskModel taskModel) throws ParseException {
+        taskService.updateTaskDeadline(taskModel);
+    }
+
 }

@@ -6,9 +6,9 @@ import { BSModalContext } from 'angular2-modal/plugins/bootstrap';
 import { CategoryService } from '../shared/services/category.service';
 
 
-import { Task } from '../models/task.model';
-import { Category } from '../models/category.model';
-import { Friend } from '../models/friend.model';
+import { Task } from '../../../../../../../../Angular Projects/peta tempalte/ng2-admin/src/app/models/task.model';
+import { Category } from '../../../../../../../../Angular Projects/peta tempalte/ng2-admin/src/app/models/category.model';
+import { Friend } from '../../../../../../../../Angular Projects/peta tempalte/ng2-admin/src/app/models/friend.model';
 import { FriendsService } from '../shared/services/friends.service';
 import { ToastService } from '../shared/services/toast.service';
 import {Router} from "@angular/router";

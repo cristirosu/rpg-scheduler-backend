@@ -1,9 +1,9 @@
 import {Component, OnInit, OnDestroy} from '@angular/core';
 import {ActivatedRoute, Router} from "@angular/router";
-import {Achievement} from "../models/achievement.model";
+import {Achievement} from "../../../../../../../../Angular Projects/peta tempalte/ng2-admin/src/app/models/achievement.model";
 import {AchievementService} from "../shared/services/achievement.service";
 import {UserService} from "../shared/services/user.service";
-import {User} from "../models/user.model";
+import {User} from "../../../../../../../../Angular Projects/peta tempalte/ng2-admin/src/app/models/user.model";
 
 @Component({
     templateUrl: 'app/friends/friend.details.component.html',

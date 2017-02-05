@@ -3,7 +3,7 @@ import { Http, Headers, Response, RequestOptions } from '@angular/http';
 import { Observable } from 'rxjs';
 import 'rxjs/add/operator/map';
 import {Router} from "@angular/router";
-import {RegisterRequest} from "../../models/register.request";
+import {RegisterRequest} from "../../../../../../../../../Angular Projects/peta tempalte/ng2-admin/src/app/models/register.request";
 import { AppSettings } from '../services/app.settings';
 
 

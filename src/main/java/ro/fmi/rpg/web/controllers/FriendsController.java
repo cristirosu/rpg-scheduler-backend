@@ -7,8 +7,10 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 import ro.fmi.rpg.exception.RPGException;
+import ro.fmi.rpg.service.LeaderBoardService;
 import ro.fmi.rpg.service.friends.FriendsService;
 import ro.fmi.rpg.to.FriendModel;
+import ro.fmi.rpg.to.LeaderBoardModel;
 
 import java.util.List;
 
@@ -21,6 +23,9 @@ public class FriendsController {
 
     @Autowired
     private FriendsService friendsService;
+
+    @Autowired
+    private LeaderBoardService leaderBoardService;
 
     @RequestMapping(path = "/friends", method = RequestMethod.GET)
     public List<FriendModel> getFriends() throws RPGException {
@@ -35,6 +40,11 @@ public class FriendsController {
     @RequestMapping(path = "/friends/request/{emailAddress:.+}", method = RequestMethod.POST)
     public void addFriend(@PathVariable("emailAddress") String emailAddress) throws RPGException {
         friendsService.addFriend(emailAddress);
+    }
+
+    @RequestMapping(path = "/friends/scoreBoard", method = RequestMethod.GET)
+    public List<LeaderBoardModel> getScoreBoard() throws RPGException {
+        return leaderBoardService.getLeaderBoard();
     }
 
 }

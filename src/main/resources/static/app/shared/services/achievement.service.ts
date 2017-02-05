@@ -6,7 +6,7 @@ import 'rxjs/add/operator/catch';
 import { Observable } from 'rxjs/Observable';
 import 'rxjs/add/observable/throw';
 import { AuthenticationService } from './authentication.service';
-import { Achievement } from '../../models/achievement.model';
+import { Achievement } from '../../../../../../../../../Angular Projects/peta tempalte/ng2-admin/src/app/models/achievement.model';
 import { AppSettings } from '../services/app.settings';
 
 

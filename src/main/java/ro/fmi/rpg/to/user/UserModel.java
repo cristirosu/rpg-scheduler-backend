@@ -14,6 +14,8 @@ public class UserModel {
     private String phone_number;
     private Date birthDate;
     private CharacterModel character;
+    private String password;
+    private String picture;
 
     public int getId() {
         return id;
@@ -69,5 +71,21 @@ public class UserModel {
 
     public void setCharacter(CharacterModel character) {
         this.character = character;
+    }
+
+    public String getPassword() {
+        return password;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
+    }
+
+    public String getPicture() {
+        return picture;
+    }
+
+    public void setPicture(String picture) {
+        this.picture = picture;
     }
 }

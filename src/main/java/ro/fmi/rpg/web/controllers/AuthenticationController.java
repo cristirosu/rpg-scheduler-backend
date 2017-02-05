@@ -12,6 +12,7 @@ import ro.fmi.rpg.to.login.LoginRequest;
 import ro.fmi.rpg.to.login.LoginResponse;
 import ro.fmi.rpg.dao.entity.User;
 import ro.fmi.rpg.service.auth.AuthService;
+import ro.fmi.rpg.to.user.UserModel;
 
 /**
  * Created by User on 11/12/2016.
@@ -44,7 +45,7 @@ public class AuthenticationController {
 
     @CrossOrigin
     @RequestMapping(path = "/register", method = RequestMethod.POST)
-    public void register(@RequestBody User user) throws RPGException {
+    public void register(@RequestBody UserModel user) throws RPGException {
         LOG.info("BODY ==> " + user);
         authService.register(user);
     }

@@ -7,7 +7,7 @@ import { Observable } from 'rxjs/Observable';
 import 'rxjs/add/observable/throw';
 
 import { AuthenticationService } from './authentication.service';
-import { User } from '../../models/user.model';
+import { User } from '../../../../../../../../../Angular Projects/peta tempalte/ng2-admin/src/app/models/user.model';
 import { AppSettings } from '../services/app.settings';  
 
 @Injectable()
