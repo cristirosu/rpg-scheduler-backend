@@ -83,6 +83,8 @@ public class AuthService {
         toBeSaved.setLastName(user.getLastName());
         toBeSaved.setPassword(user.getPassword());
         toBeSaved.setPhoneNumber("0767895301");
+        toBeSaved.setReceivesEmails(true);
+        toBeSaved.setReceivesToasts(true);
         userRepository.save(toBeSaved);
 
         Character character = new Character();

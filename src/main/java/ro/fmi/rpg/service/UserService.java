@@ -39,6 +39,9 @@ public class UserService {
         um.setId(user.getId());
         um.setPhone_number(um.getPhone_number());
         um.setBirthDate(user.getBirthDate());
+        um.setPicture(user.getCharacter().getPicture());
+        um.setReceivesToasts(user.isReceivesToasts());
+        um.setReceivesEmails(user.isReceivesEmails());
 
         CharacterModel cm = new CharacterModel();
         Character character = user.getCharacter();
