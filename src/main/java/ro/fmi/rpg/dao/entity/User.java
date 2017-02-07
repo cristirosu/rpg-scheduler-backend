@@ -67,6 +67,9 @@ public class User implements Serializable{
     @OneToOne(fetch = FetchType.LAZY, mappedBy = "user")
     private Character character;
 
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "user")
+    private List<UserEvent> events;
+
     public User() {
     }
 
@@ -190,5 +193,13 @@ public class User implements Serializable{
 
     public void setAchievements(List<Achievement> achievements) {
         this.achievements = achievements;
+    }
+
+    public List<UserEvent> getEvents() {
+        return events;
+    }
+
+    public void setEvents(List<UserEvent> events) {
+        this.events = events;
     }
 }

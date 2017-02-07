@@ -5,15 +5,14 @@ import org.springframework.stereotype.Service;
 import ro.fmi.rpg.dao.entity.Achievement;
 import ro.fmi.rpg.dao.entity.Character;
 import ro.fmi.rpg.dao.entity.Task;
-import ro.fmi.rpg.dao.repository.AcvhievementRepository;
-import ro.fmi.rpg.dao.repository.CharacterRepository;
-import ro.fmi.rpg.dao.repository.TaskRepository;
-import ro.fmi.rpg.dao.repository.UserRepository;
+import ro.fmi.rpg.dao.entity.UserEvent;
+import ro.fmi.rpg.dao.repository.*;
 import ro.fmi.rpg.service.auth.SessionService;
 import ro.fmi.rpg.service.notifications.NotificationService;
 import ro.fmi.rpg.service.notifications.NotificationType;
 import ro.fmi.rpg.to.task.AchievementModel;
 
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -40,6 +39,9 @@ public class RewardService {
     @Autowired
     private NotificationService notificationService;
 
+    @Autowired
+    private UserEventRepository eventRepository;
+
     private final static int XP_REWARD = 50;
 
     public void rewardXp(Task task) {
@@ -55,6 +57,7 @@ public class RewardService {
                 character.setExperience(nextLvlXp);
                 character.setLevel(character.getLevel() + 1);
                 notificationService.sendNotification(sessionService.getUserId(), NotificationType.LEVEL_UP.getMessage());
+                createUserEvent(sessionService.getUser().getFirstName() + " LEVELED UP! (" + sessionService.getUser().getCharacter().getLevel() + ")");
             }
             if(task.getExperience() == null){
                 task.setExperience(rewardXp);
@@ -88,6 +91,18 @@ public class RewardService {
 
         acvhievementRepository.save(achievement);
         notificationService.sendNotification(sessionService.getUserId(), "First Task Creation!");
+        createUserEvent(sessionService.getUser().getFirstName() + " just earned FIRST TASK CREATION award!");
+    }
+
+    public void createUserEvent(String description){
+        UserEvent event = new UserEvent();
+        event.setDate(new Date());
+        event.setDescription(description);
+        event.setUser(sessionService.getUser());
+        notificationService.sendNotificationAlert(description);
+        notificationService.sendNotification(description);
+
+        eventRepository.save(event);
     }
 
     public void rewardFirstTaskCompleted(){
@@ -105,6 +120,7 @@ public class RewardService {
 
         acvhievementRepository.save(achievement);
         notificationService.sendNotification(sessionService.getUserId(), "First Task Completed!");
+        createUserEvent(sessionService.getUser().getFirstName() + " just earned FIRST TASK COMPLETED award!");
     }
 
     public List<AchievementModel> getAchievements(){

@@ -29,6 +29,8 @@ public class MvcConfig extends WebMvcConfigurerAdapter {
         registry.addInterceptor(jwtInterceptor).addPathPatterns("/api/tasks/**");
         registry.addInterceptor(jwtInterceptor).addPathPatterns("/api/user");
         registry.addInterceptor(jwtInterceptor).addPathPatterns("/api/friends/**");
+        registry.addInterceptor(jwtInterceptor).addPathPatterns("/api/alerts/**");
+        registry.addInterceptor(jwtInterceptor).addPathPatterns("/api/chart/**");
     }
 
     @Override

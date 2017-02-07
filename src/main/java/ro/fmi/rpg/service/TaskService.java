@@ -11,7 +11,9 @@ import ro.fmi.rpg.dao.repository.TaskRepository;
 import ro.fmi.rpg.dao.repository.UserRepository;
 import ro.fmi.rpg.exception.RPGException;
 import ro.fmi.rpg.service.auth.SessionService;
+import ro.fmi.rpg.service.friends.FriendsService;
 import ro.fmi.rpg.service.helper.ConverterHelper;
+import ro.fmi.rpg.service.notifications.NotificationService;
 import ro.fmi.rpg.to.charts.BarChartData;
 import ro.fmi.rpg.to.charts.LineChartData;
 import ro.fmi.rpg.to.task.CategoryModel;
@@ -45,6 +47,12 @@ public class TaskService {
 
     @Autowired
     private UserRepository userRepository;
+
+    @Autowired
+    private NotificationService notificationService;
+
+    @Autowired
+    private FriendsService friendsService;
 
     public List<TaskModel> updateTask(TaskModel taskModel) throws ParseException {
 
@@ -133,6 +141,7 @@ public class TaskService {
             task.setFinishedDate(null);
         } else {
             task.setFinishedDate(new Date());
+            rewardService.createUserEvent(sessionService.getUser().getFirstName() + " finished a task! (" + task.getName() + ")");
         }
 
         task.setFinished(!task.isFinished());

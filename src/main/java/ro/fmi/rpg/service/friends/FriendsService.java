@@ -37,7 +37,7 @@ public class FriendsService {
     private SessionService sessionService;
 
     public List<FriendModel> getFriends(){
-        System.out.println(userService.getLoggedInUser().getId());
+        System.out.println(sessionService.getUser().getId());
         return friendsRepository.getFriendsByUser(userService.getLoggedInUser().getId());
     }
 

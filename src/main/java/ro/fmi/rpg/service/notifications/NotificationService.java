@@ -5,6 +5,7 @@ import org.springframework.messaging.simp.SimpMessagingTemplate;
 import org.springframework.stereotype.Service;
 import ro.fmi.rpg.dao.entity.User;
 import ro.fmi.rpg.dao.repository.FriendsRepository;
+import ro.fmi.rpg.service.auth.SessionService;
 
 import java.util.List;
 
@@ -20,6 +21,9 @@ public class NotificationService {
     @Autowired
     private FriendsRepository friendsRepository;
 
+    @Autowired
+    private SessionService sessionService;
+
     public void sendNotification(Object topic, String message){
         template.convertAndSend("/topic/" + topic, message);
     }
@@ -31,4 +35,20 @@ public class NotificationService {
             sendNotification(id, sessionUser.getFirstName() + " " + sessionUser.getLastName() + " just got online!");
         }
     }
+
+    public void sendNotificationAlert(String message){
+        List<Integer> friendIds = friendsRepository.getFriendIdsByUser(sessionService.getUser().getId());
+        for(Integer id : friendIds){
+            sendNotification(id + "-alert", message);
+        }
+    }
+
+    public void sendNotification(String message){
+        List<Integer> friendIds = friendsRepository.getFriendIdsByUser(sessionService.getUser().getId());
+        for(Integer id : friendIds){
+            sendNotification(id, message);
+        }
+    }
+
+
 }
