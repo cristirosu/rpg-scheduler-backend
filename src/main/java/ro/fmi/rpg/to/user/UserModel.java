@@ -16,6 +16,8 @@ public class UserModel {
     private CharacterModel character;
     private String password;
     private String picture;
+    private boolean receivesToasts;
+    private boolean receivesEmails;
 
     public int getId() {
         return id;
@@ -87,5 +89,21 @@ public class UserModel {
 
     public void setPicture(String picture) {
         this.picture = picture;
+    }
+
+    public boolean isReceivesToasts() {
+        return receivesToasts;
+    }
+
+    public void setReceivesToasts(boolean receivesToasts) {
+        this.receivesToasts = receivesToasts;
+    }
+
+    public boolean isReceivesEmails() {
+        return receivesEmails;
+    }
+
+    public void setReceivesEmails(boolean receivesEmails) {
+        this.receivesEmails = receivesEmails;
     }
 }

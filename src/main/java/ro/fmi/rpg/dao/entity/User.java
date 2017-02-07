@@ -58,6 +58,12 @@ public class User implements Serializable{
     @Column(name = "confirmed")
     private boolean confirmed;
 
+    @Column(name = "receives_toasts")
+    private boolean receivesToasts;
+
+    @Column(name = "receives_email")
+    private boolean receivesEmails;
+
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "user")
     private Set<Category> categories = new HashSet<Category>();
 
@@ -201,5 +207,21 @@ public class User implements Serializable{
 
     public void setEvents(List<UserEvent> events) {
         this.events = events;
+    }
+
+    public boolean isReceivesToasts() {
+        return receivesToasts;
+    }
+
+    public void setReceivesToasts(boolean receivesToasts) {
+        this.receivesToasts = receivesToasts;
+    }
+
+    public boolean isReceivesEmails() {
+        return receivesEmails;
+    }
+
+    public void setReceivesEmails(boolean receivesEmails) {
+        this.receivesEmails = receivesEmails;
     }
 }
