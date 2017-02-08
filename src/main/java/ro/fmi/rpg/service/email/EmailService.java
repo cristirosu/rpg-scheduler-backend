@@ -42,7 +42,24 @@ public class EmailService {
             e.printStackTrace();
         }
         javaMailSender.send(mail);
-        LOG.info("Sent email to " + user.getEmail() + " for content " + emailContent);
+        LOG.info("Sent email to " + user.getEmail() + " for content \"" + emailContent + "\"");
+    }
+
+    public void sendEmailWithContent(EmailType emailType, User user, String content) {
+        LOG.info("Trying to send email of type " + emailType + " to " + user.getEmail());
+        MimeMessage mail = javaMailSender.createMimeMessage();
+        try {
+            MimeMessageHelper helper = new MimeMessageHelper(mail, true);
+            helper.setTo(user.getEmail());
+            helper.setFrom(FROM);
+            helper.setSubject(emailType.getTitle());
+            helper.setText(content);
+            helper.setText(content);
+        } catch (MessagingException e) {
+            e.printStackTrace();
+        }
+        javaMailSender.send(mail);
+        LOG.info("Sent email to " + user.getEmail() + " for content \"" + content + "\"");
     }
 
     private String getEmailContent(EmailType emailType, User user){

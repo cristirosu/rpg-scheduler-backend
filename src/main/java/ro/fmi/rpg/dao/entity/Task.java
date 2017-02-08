@@ -43,15 +43,26 @@ public class Task implements Serializable{
     @Column(name = "finished_date")
     private Date finishedDate;
 
+    @Column(name = "EMAIL_LATE_NOTIFICATION")
+    private boolean sentLateNotification;
+
+    @Column(name = "EMAIL_BEFORE_DUEDATE")
+    private boolean sentBeforeDueDateNotificaiton;
+
+    @Column(name = "ACCORDED_PENALTY")
+    private boolean accordedPenalty;
+
     public Task() {
     }
 
-    public Task(String name, String description, Date dueDate, boolean isFinished, Category category) {
+    public Task(String name, String description, Date dueDate, boolean isFinished, Category category, boolean sentLateNotification, boolean sentBeforeDueDateNotificaiton) {
         this.name = name;
         this.description = description;
         this.dueDate = dueDate;
         this.isFinished = isFinished;
         this.category = category;
+        this.sentLateNotification = sentLateNotification;
+        this.sentBeforeDueDateNotificaiton = sentBeforeDueDateNotificaiton;
     }
 
     public int getDifficulty() {
@@ -125,5 +136,37 @@ public class Task implements Serializable{
 
     public void setFinishedDate(Date finishedDate) {
         this.finishedDate = finishedDate;
+    }
+
+    public boolean isSentLateNotification() {
+        return sentLateNotification;
+    }
+
+    public void setSentLateNotification(boolean sentLateNotification) {
+        this.sentLateNotification = sentLateNotification;
+    }
+
+    public boolean isSentBeforeDueDateNotificaiton() {
+        return sentBeforeDueDateNotificaiton;
+    }
+
+    public void setSentBeforeDueDateNotificaiton(boolean sentBeforeDueDateNotificaiton) {
+        this.sentBeforeDueDateNotificaiton = sentBeforeDueDateNotificaiton;
+    }
+
+    public Boolean getFinished() {
+        return isFinished;
+    }
+
+    public void setFinished(Boolean finished) {
+        isFinished = finished;
+    }
+
+    public boolean isAccordedPenalty() {
+        return accordedPenalty;
+    }
+
+    public void setAccordedPenalty(boolean accordedPenalty) {
+        this.accordedPenalty = accordedPenalty;
     }
 }

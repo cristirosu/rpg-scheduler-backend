@@ -5,7 +5,9 @@ package ro.fmi.rpg.service.email;
  */
 public enum EmailType {
 
-    ACTIVATION_EMAIL("Activation notification");
+    ACTIVATION_EMAIL("Activation notification"),
+    LATE_TASK_EMAIL("Late task notification"),
+    BEFORE_TASK_EMAIL("Late task notification");
 
     private String title;
 

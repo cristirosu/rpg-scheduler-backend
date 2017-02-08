@@ -17,4 +17,9 @@ public interface TaskRepository  extends JpaRepository<Task, Integer> {
             "INNER JOIN c.user u " +
             "WHERE u.id = :userId")
     List<Task> findUserTasks(@Param("userId") int userId);
+
+    @Query(" SELECT t FROM Task t " +
+            "LEFT JOIN FETCH t.category c " +
+            "LEFT JOIN FETCH c.user u")
+    List<Task> findAllLefJoinFetch();
 }

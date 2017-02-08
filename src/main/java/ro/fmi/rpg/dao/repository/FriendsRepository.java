@@ -31,7 +31,7 @@ public interface FriendsRepository extends JpaRepository<UserFriend, Integer>{
 
     @Query( " SELECT f.id FROM UserFriend uf " +
             " INNER JOIN uf.friend f " +
-            " WHERE uf.user.id = :userId")
+            " WHERE uf.user.id = :userId AND f.receivesToasts = '1'")
     List<Integer> getFriendIdsByUser(@Param("userId") Integer id);
 
     @Query( " SELECT new ro.fmi.rpg.to.LeaderBoardModel(f.firstName, f.lastName, c.picture, c.level, f.email) FROM UserFriend uf " +

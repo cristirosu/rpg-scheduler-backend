@@ -60,6 +60,9 @@ public class TaskService {
 
         if (task == null) {
             task = new Task();
+            task.setSentBeforeDueDateNotificaiton(false);
+            task.setSentLateNotification(false);
+            task.setAccordedPenalty(false);
         }
 
         Category category = categoryRepository.findByName(taskModel.getCategory().getName(), sessionService.getUser().getId());
@@ -141,6 +144,9 @@ public class TaskService {
             task.setFinishedDate(null);
         } else {
             task.setFinishedDate(new Date());
+            User user = task.getCategory().getUser();
+            if(user.getCharacter().getHealth() < 100) user.getCharacter().setHealth(user.getCharacter().getHealth() + 10);
+            userRepository.save(user);
             rewardService.createUserEvent(sessionService.getUser().getFirstName() + " finished a task! (" + task.getName() + ")");
         }
 
@@ -180,7 +186,7 @@ public class TaskService {
         b2 = initializeBarChart(b2);
         for (Task task : tasks) {
             int month = task.getDueDate().getMonth();
-            if (task.getDueDate().before(new Date()))
+            if (task.isFinished() && task.getFinishedDate().after(task.getDueDate()))
                 b2.getData().set(month, b2.getData().get(month) + 1);
         }
         data.add(b2);
