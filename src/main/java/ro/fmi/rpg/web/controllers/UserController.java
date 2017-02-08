@@ -9,7 +9,6 @@ import ro.fmi.rpg.to.user.UserModel;
 /**
  * Created by User on 12/18/2016.
  */
-@CrossOrigin
 @RestController
 @RequestMapping("/api")
 public class UserController {
@@ -26,6 +25,11 @@ public class UserController {
     @RequestMapping(path = "/users/{userId}", method = RequestMethod.GET)
     public UserModel getUserDetails(@PathVariable("userId") Integer userId) throws RPGException {
         return userService.getUserDetails(userId);
+    }
+
+    @RequestMapping(path = "/users", method = RequestMethod.PUT)
+    public void updateUserDetails(@RequestBody UserModel userModel) throws RPGException {
+        userService.updateDetails(userModel);
     }
 
 }

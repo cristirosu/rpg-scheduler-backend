@@ -58,4 +58,19 @@ public class UserService {
     }
 
 
+    public void updateDetails(UserModel userModel) {
+        User user = userRepository.findOne(userModel.getId());
+        user.setFirstName(userModel.getFirstName() != null && !userModel.getFirstName().isEmpty()
+                ? userModel.getFirstName() : user.getFirstName());
+        user.setLastName(userModel.getLastName() != null && !userModel.getLastName().isEmpty()
+                ? userModel.getLastName() : user.getLastName());
+        user.setEmail(userModel.getEmail() != null && !userModel.getEmail().isEmpty()
+                ? userModel.getEmail() : user.getEmail());
+        user.getCharacter().setPicture(userModel.getPicture() != null && !userModel.getPicture().isEmpty()
+                ? userModel.getPicture() : user.getCharacter().getPicture());
+        user.setReceivesEmails(userModel.isReceivesEmails());
+        user.setReceivesToasts(userModel.isReceivesToasts());
+
+        userRepository.save(user);
+    }
 }
